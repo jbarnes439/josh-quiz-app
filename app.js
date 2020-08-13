@@ -56,13 +56,24 @@ function generateQuestionHTML() {
 
 }
 
+// function generateResultsPageHTML() {
+//     return `    
+//       <div class="container">               
+//                 <form id="js-results-page">
+//                     <button type="button" id="test-home">Try Again!</button>
+//                 </form>
+//                 <p>Congrats! you got ${store.score} correct</p>
+//             </div>`;
+// }
+
 function generateResultsPageHTML() {
     return `    
-      <div class="container">               
-                <form id="js-results-page">
-                    <button type="button" class="button" id="test-home">Try Again!</button>
+      <div class="container">
+                <h1>Thanks for taking our quiz!</h1>
+                <form id="js-result-page">
+                    <button type="button" id="restart-quiz">Take it Again!</button>
                 </form>
-                <p>Congrats! you got ${store.score} correct</p>
+                <div>Congrats! you got ${store.score} right.</div>
             </div>`;
 }
 
@@ -71,11 +82,7 @@ function generateResultsPageHTML() {
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 // if statement if right alert right answer if wrong alert wrong answer.
 function renderMain() {
-    // if (store.quizStarted) {
-    //     renderQuestionPage();
-    // } else {
-    //     renderHomePage();
-    // }
+
     if (store.questionNumber < 5 && store.quizStarted) {
         renderQuestionPage();
     } else if (store.questionNumber === 5 && store.quizStarted) {
@@ -84,7 +91,6 @@ function renderMain() {
     } else {
         renderHomePage();
     }
-
 }
 
 
@@ -98,10 +104,8 @@ function renderHomePage() {
 
 
 function renderQuestionPage() {
-    // How do we keep track of questions and keep going through our array of objects(questions).
-    // if Quiz start: true
-    let questionHTML = generateQuestionHTML();
 
+    let questionHTML = generateQuestionHTML();
     $('main').html(questionHTML);
     console.log('renderQuestionPage() ran');
 }
@@ -127,26 +131,30 @@ function startPageButton() {
     console.log('startPageButton() ran');
 }
 
-// function resultsPageButton() {
 
+// Refuses to work, about to be the reason I rewrite this whole program.
 
-//     $('#return-home').on('click', event => {
-//         event.preventDefault();
-//         console.log('something happen already');
-//         renderHomePage();
-//     });
-//     console.log('resultsPageButton() ran');
-// }
-function testButton() {
-    $('#test-home').on('click', event => {
-        console.log('fingers crossed');
+function restartPageButton() {
+    $('#restart-quiz').on('click', event => {
+        console.log('does anything work?');
         event.preventDefault();
-        $('main').remove();
         renderHomePage();
+    });
 
-        console.log('test button ran');
-    })
+    console.log('startPageButton() ran');
 }
+
+
+// function testButton() {
+//     $('#js-results-page').on('click', event => {
+//         console.log('fingers crossed');
+//         event.preventDefault();
+//         $('main').remove();
+//         renderHomePage();
+
+//         console.log('test button ran');
+//     });
+// }
 
 
 // submitAnswer needs to send us to our next question page, by adding to the counter value.
@@ -166,10 +174,11 @@ function submitAnswer() {
         // cycle through questions // RENDER AFTER CHANGING STORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         store.questionNumber += 1;
 
-        if (store.questionNumber < 5) {
-            renderQuestionPage();
+        if (store.questionNumber < 5) { // I feel like the button issue is derived from this block of code.
+            renderQuestionPage(); // maybe rendering from this button is causing the other button to malfunction. 
         } else if (store.questionNumber === 5) {
             store.quizStarted = false;
+            store.questionNumber = 0; // <--- clear out question number see if that's affecting the button.
             renderResultsPage();
         } else {
             renderHomePage();
@@ -180,29 +189,21 @@ function submitAnswer() {
     });
     // needs to match 
     // $('input[name=answers]:checked').val();
-
     console.log('submitAnswer() ran');
 }
 
-// $('input[type=radio][name=bedStatus]').change(function()
-
-// function collectAnswers() {
-//     $('input[type=radio][name=answers]').change(function(event) {
-//         console.log('something', 'input[name=answers]');
-//     });
-// };
 
 
 function handleQuiz() {
     // needs to render our home page, and activate all of our other functions.
-    // console.log(questions.length);
     renderMain();
     generateHomePageHTML();
     generateQuestionHTML();
     startPageButton();
     submitAnswer();
     // resultsPageButton();
-    testButton();
+    // testButton();
+    restartPageButton();
 
     console.log('handleQuiz() ran');
 }
