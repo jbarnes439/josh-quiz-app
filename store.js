@@ -2,10 +2,23 @@
 /**
  * Example store structure
  */
+
+// 5 or more questions are required
+// const questions = [
+
+
+
+
+// quizStarted: false,
+// questionNumber: 0,
+// score: 0;
+
+
 const store = {
     // 5 or more questions are required
     questions: [{
-            question: 'How many points are awarded for a touchdown in NFL football?',
+
+            name: 'How many points are awarded for a touchdown in NFL football?',
             answers: [
                 1,
                 2,
@@ -15,7 +28,7 @@ const store = {
             correctAnswer: 6,
         },
         {
-            question: 'How many points are awarded for a layup in NBA basketball?',
+            name: 'How many points are awarded for a layup in NBA basketball?',
             answers: [
                 1,
                 2,
@@ -25,7 +38,7 @@ const store = {
             correctAnswer: 2,
         },
         {
-            question: 'How many points are awarded for a fieldgoal in NFL football?',
+            name: 'How many points are awarded for a fieldgoal in NFL football?',
             answers: [
                 1,
                 2,
@@ -35,17 +48,17 @@ const store = {
             correctAnswer: 3,
         },
         {
-            question: 'How many minutes are in an NBA quarter?',
+            name: 'How many minutes are in an NBA quarter?',
             answers: [
-                '12 minutes',
-                '6 minutes',
-                '30 minutes',
-                '1 hours',
+                12,
+                6,
+                30,
+                60,
             ],
-            correctAnswer: '12 minutes',
+            correctAnswer: 12,
         },
         {
-            question: 'How many points are awarded for returning a missed point after attempt to the opposing teams endzone',
+            name: 'How many points are awarded for returning a missed point after attempt to the opposing teams endzone',
             answers: [
                 1,
                 2,
@@ -55,19 +68,27 @@ const store = {
             correctAnswer: 2,
         },
         {
-            question: 'How many quarters are in an NBA game'
+            name: 'How many quarters are in an NBA game',
             answers: [
                 4,
                 6,
                 2,
                 3,
             ],
-            correctAnswer: 4,
+            correctAnswer: 4
         },
     ],
-
-
     quizStarted: false,
     questionNumber: 0,
     score: 0
+
 };
+
+// let questionCount = store.questionNumber;
+let currentQuestion = store.questions[store.questionCount];
+
+console.log(store.questionNumber);
+
+console.log(store.questions[store.questionNumber].name);
+// console.log(currentQuestion.name); <--- DOESN'T WORK
+console.log(store.questions[store.questionNumber]);
