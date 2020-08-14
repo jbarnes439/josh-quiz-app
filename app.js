@@ -54,6 +54,8 @@ function generateQuestionHTML() {
        <score-spot>You have gotten ${store.score} right!</score-spot>
      </div>`;
 
+    console.log('generateQuestionHTML ran');
+
 }
 
 // function generateResultsPageHTML() {
@@ -107,6 +109,7 @@ function renderQuestionPage() {
 
     let questionHTML = generateQuestionHTML();
     $('main').html(questionHTML);
+
     console.log('renderQuestionPage() ran');
 }
 
@@ -121,7 +124,7 @@ function renderResultsPage() {
 // This needs to send us to our question page.
 
 function startPageButton() {
-    $('#start-quiz').on('click', event => {
+    $('main').on('click', event => {
         event.preventDefault();
         renderQuestionPage();
 
@@ -135,9 +138,10 @@ function startPageButton() {
 // Refuses to work, about to be the reason I rewrite this whole program.
 
 function restartPageButton() {
-    $('#restart-quiz').on('click', event => {
+    $('main').on('click', '#restart-quiz', function(event) {
         console.log('does anything work?');
         event.preventDefault();
+        store.score = 0;
         renderHomePage();
     });
 
