@@ -124,7 +124,8 @@ function renderResultsPage() {
 // This needs to send us to our question page.
 
 function startPageButton() {
-    $('main').on('click', event => {
+    $('main').on('click', '#start-quiz', event => {
+
         event.preventDefault();
         renderQuestionPage();
 
@@ -169,31 +170,33 @@ function submitAnswer() {
     $('main').on('submit', '#js-question-form', function(event) {
         event.preventDefault();
         let currentQuestion = store.questions[store.questionNumber];
-        if (parseInt(event.target.answers.value) === currentQuestion.correctAnswer) {
-            store.score++;
-        } else {
-            // store.score--;
-            alert(`Sorry, wrong answer, the correct answer was ${currentQuestion.correctAnswer}`);
-        }
-        // cycle through questions // RENDER AFTER CHANGING STORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        store.questionNumber += 1;
 
-        if (store.questionNumber < 5) { // I feel like the button issue is derived from this block of code.
-            renderQuestionPage(); // maybe rendering from this button is causing the other button to malfunction. 
-        } else if (store.questionNumber === 5) {
-            store.quizStarted = false;
-            store.questionNumber = 0; // <--- clear out question number see if that's affecting the button.
-            renderResultsPage();
+        if ($('input:checked').val() !== undefined) {
+
+            if (parseInt(event.target.answers.value) === currentQuestion.correctAnswer) {
+                store.score++;
+            } else {
+                alert(`Sorry, wrong answer, the correct answer was ${currentQuestion.correctAnswer}`);
+
+            }
+            // cycle through questions // RENDER AFTER CHANGING STORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            store.questionNumber += 1;
+
+            if (store.questionNumber < 5) { // I feel like the button issue is derived from this block of code.
+                renderQuestionPage(); // maybe rendering from this button is causing the other button to malfunction. 
+            }
+            if (store.questionNumber === 5) {
+                store.quizStarted = false;
+                store.questionNumber = 0; // <--- clear out question number see if that's affecting the button.
+                renderResultsPage();
+            };
         } else {
-            renderHomePage();
+            alert('Sorry you have to at least try!');
         }
 
-        // if answer selected = correct answer add to our store.score total. else 
-        console.log(event.target.answers.value, currentQuestion.correctAnswer);
-    });
-    // needs to match 
-    // $('input[name=answers]:checked').val();
-    console.log('submitAnswer() ran');
+        // $('input[name=answers]:checked').val();
+        console.log('submitAnswer() ran');
+    })
 }
 
 
