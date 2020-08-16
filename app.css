@@ -12,6 +12,11 @@
     box-sizing: border-box;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -23,6 +28,26 @@
     max-width: 600px;
     margin: 0 auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.answer-select {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+}
+
+.container img {
+    margin-top: 15px;
+    max-height: 500px;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 header {

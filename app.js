@@ -27,6 +27,7 @@ function generateHomePageHTML() {
                 <form id="js-opening-page">
                     <button type="button" id="start-quiz">Start the Quiz!</button>
                 </form>
+                <img src='images/state-farm-stadium.jpeg' alt='Arizona Cardinals Stadium reflected in a pool of water'>
             </div>`;
     console.log('generateHomePageHTML() ran');
 }
@@ -41,32 +42,24 @@ function generateQuestionHTML() {
        <h1>${currentQuestion.name}</h1>
        <form id="js-question-form">
            <input type="radio" name="answers" value=${currentQuestion.answers[0]}>
-           <label for="male">${currentQuestion.answers[0]}</label><br>
+           <label class="answer-select">${currentQuestion.answers[0]}</label><br>
            <input type="radio"  name="answers" value=${currentQuestion.answers[1]}>
-           <label for="female">${currentQuestion.answers[1]}</label><br>
+           <label class="answer-select">${currentQuestion.answers[1]}</label><br>
            <input type="radio" name="answers" value=${currentQuestion.answers[2]}>
-           <label for="other">${currentQuestion.answers[2]}</label><br>
+           <label class="answer-select">${currentQuestion.answers[2]}</label><br>
            <input type="radio" name="answers" value=${currentQuestion.answers[3]}>
-           <label for="other">${currentQuestion.answers[3]}</label><br>
+           <label class="answer-select">${currentQuestion.answers[3]}</label><br>
            <button type="submit" id="give-answer">Send it!</button>
        </form>
-       <quiz-place>Question number: ${store.questionNumber} out of 5.</quiz-place><br>
+       <quiz-place>Question number: ${store.questionNumber + 1} out of 5.</quiz-place><br>
        <score-spot>You have gotten ${store.score} right!</score-spot>
+       <img src='${currentQuestion.image}' alt=${currentQuestion.imageAlt}>
      </div>`;
 
     console.log('generateQuestionHTML ran');
 
 }
 
-// function generateResultsPageHTML() {
-//     return `    
-//       <div class="container">               
-//                 <form id="js-results-page">
-//                     <button type="button" id="test-home">Try Again!</button>
-//                 </form>
-//                 <p>Congrats! you got ${store.score} correct</p>
-//             </div>`;
-// }
 
 function generateResultsPageHTML() {
     return `    
@@ -76,6 +69,7 @@ function generateResultsPageHTML() {
                     <button type="button" id="restart-quiz">Take it Again!</button>
                 </form>
                 <div>Congrats! you got ${store.score} right.</div>
+                <img src='images/trophy.jpg' alt='The covetted Vince Lombardi Trophy'>
             </div>`;
 }
 
@@ -196,7 +190,7 @@ function submitAnswer() {
 
         // $('input[name=answers]:checked').val();
         console.log('submitAnswer() ran');
-    })
+    });
 }
 
 
