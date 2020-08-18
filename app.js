@@ -1,25 +1,8 @@
 'use strict';
 
-
-/**
- * 
- * 
- * Technical requirements:
- * 
- * Your app should include a render() function, that regenerates the view each time the store is updated. 
- * See your course material, consult your instructor, and reference the slides for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
- */
-
 /********** TEMPLATE GENERATION FUNCTIONS **********/
-
 // These functions return HTML templates
+
 function generateHomePageHTML() {
     return `    
       <div class="container">
@@ -41,6 +24,7 @@ function generateQuestionHTML() {
   <div class="container">       
        <form id="js-question-form">
             <legend>${currentQuestion.name}</legend>
+            <div class="button-div">
            <input type="radio" name="answers" value=${currentQuestion.answers[0]}>
            <label class="answer-select">${currentQuestion.answers[0]}</label><br>
            <input type="radio"  name="answers" value=${currentQuestion.answers[1]}>
@@ -49,6 +33,7 @@ function generateQuestionHTML() {
            <label class="answer-select">${currentQuestion.answers[2]}</label><br>
            <input type="radio" name="answers" value=${currentQuestion.answers[3]}>
            <label class="answer-select">${currentQuestion.answers[3]}</label><br>
+           </div>
            <button type="submit" id="give-answer">Send it!</button>
        </form>
        <quiz-place>Question number: ${store.questionNumber + 1} out of 6.</quiz-place><br>
@@ -70,11 +55,12 @@ function generateResultsPageHTML() {
             </div>`;
 }
 
+
 function generatePositiveFeedbackHTML() {
     let currentQuestion = store.questions[store.questionNumber];
     return `    
       <div class="container">
-                <h2>Score! ${currentQuestion.correctAnswer} is correct!</h2>
+                <h2>Score! ${currentQuestion.correctAnswer} is the correct answer!</h2>
                 <p></p>
                 <form id="js-positive-results-page">
                     <button type="button" id="next">Next Question</button>
@@ -83,6 +69,7 @@ function generatePositiveFeedbackHTML() {
                 
             </div>`;
 }
+
 
 function generateNegativeFeedbackHTML() {
     let currentQuestion = store.questions[store.questionNumber];
@@ -97,9 +84,7 @@ function generateNegativeFeedbackHTML() {
             </div>`;
 }
 
-
 /********** RENDER FUNCTION(S) **********/
-
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
 function renderHomePage() {
@@ -127,17 +112,14 @@ function renderNegativeFeedbackPage() {
 
 function startPageButton() {
     $('main').on('click', '#start-quiz', event => {
-
         event.preventDefault();
         renderQuestionPage();
-
     });
-
 }
+
 
 function nextQuestionButton() {
     $('main').on('click', '#next', function(event) {
-
         event.preventDefault();
         if (store.questionNumber < store.questions.length - 1) {
             store.questionNumber++;
@@ -145,9 +127,9 @@ function nextQuestionButton() {
         } else {
             renderResultsPage();
         }
-
     });
 }
+
 
 function restartPageButton() {
     $('main').on('click', '#restart-quiz', function(event) {
@@ -167,7 +149,6 @@ function submitAnswer() {
         let currentQuestion = store.questions[store.questionNumber];
 
         if ($('input:checked').val() !== undefined) {
-
             if (parseInt(event.target.answers.value) === currentQuestion.correctAnswer) {
                 store.score++;
                 renderPositiveFeedbackPage();
@@ -175,13 +156,11 @@ function submitAnswer() {
                 renderNegativeFeedbackPage();
             }
             // ALWAYS RENDER AFTER CHANGING STORE! //
-
         } else {
             alert("You miss 100% of the shots you never take -Wayne Gretzky");
         }
     });
 }
-
 
 
 function handleQuiz() {

@@ -36,11 +36,10 @@ body {
     flex-direction: column;
 }
 
-.answer-select {
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
+.button-div {
+    display: flex column;
+    justify-content: space-between;
+    padding-bottom: 10px;
 }
 
 .container img {
