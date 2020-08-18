@@ -29,7 +29,7 @@ function generateHomePageHTML() {
                 </form>
                 <img src='images/state-farm-stadium.jpeg' alt='Arizona Cardinals Stadium reflected in a pool of water'>
             </div>`;
-    console.log('generateHomePageHTML() ran');
+
 }
 
 // this needs to reference our questions in our store object array
@@ -38,9 +38,9 @@ function generateQuestionHTML() {
     let currentQuestion = store.questions[store.questionNumber];
 
     return `
-  <div class="container">
-       <h1>${currentQuestion.name}</h1>
+  <div class="container">       
        <form id="js-question-form">
+            <legend>${currentQuestion.name}</legend>
            <input type="radio" name="answers" value=${currentQuestion.answers[0]}>
            <label class="answer-select">${currentQuestion.answers[0]}</label><br>
            <input type="radio"  name="answers" value=${currentQuestion.answers[1]}>
@@ -68,10 +68,35 @@ function generateResultsPageHTML() {
                 <form id="js-result-page">
                     <button type="button" id="restart-quiz">Take it Again!</button>
                 </form>
-                <div>Congrats! you got ${store.score} right.</div>
+                <div>Congrats! you got ${store.score} out of ${store.questions.length-1} right.</div>
                 <img src='images/trophy.jpg' alt='The covetted Vince Lombardi Trophy'>
             </div>`;
 }
+
+function generatePositiveFeedbackHTML() {
+    let currentQuestion = store.questions[store.questionNumber];
+    return `    
+      <div class="container">
+                <h2>Score! ${currentQuestion.answer} was correct!</h2>
+                <p></p>
+                <form id="js-positive-results-page">
+                    <button type="button" id="next">Next Question</button>
+                </form>
+                
+            </div>`;
+}
+
+function generateNegativeFeedbackHTML() {
+    return `    
+      <div class="container">
+                <h2>Brick! ${currentQuestion.answer} was the correct answer.</h2>
+                <p></p>
+                <form id="js-negative-results-page">
+                    <button type="button" id="next">Next Question</button>
+                </form>                
+            </div>`;
+}
+
 
 /********** RENDER FUNCTION(S) **********/
 
@@ -91,25 +116,16 @@ function renderMain() {
 
 
 function renderHomePage() {
-
-    let homePage = generateHomePageHTML();
-    $('main').html(homePage);
-
-    console.log('renderHomePage() ran');
+    $('main').html(generateHomePageHTML());
 }
 
 
 function renderQuestionPage() {
-
-    let questionHTML = generateQuestionHTML();
-    $('main').html(questionHTML);
-
-    console.log('renderQuestionPage() ran');
+    $('main').html(generateQuestionHTML());
 }
 
 function renderResultsPage() {
-    let resultsHTML = generateResultsPageHTML();
-    $('main').html(resultsHTML);
+    $('main').html(generateResultsPageHTML());
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -123,14 +139,23 @@ function startPageButton() {
         event.preventDefault();
         renderQuestionPage();
 
-        console.log(store.questionNumber);
     });
 
-    console.log('startPageButton() ran');
 }
 
+// Needs to be linked to the positive/negative feedback results pages.
+function nextQuestionButton() {
+    $('main').on('submit', '#next', function(event) {
+        event.preventDefault();
+        if (store.questionNumber < store.questions.length - 1) {
+            store.questionNumber++;
+            renderQuestionPage();
+        } else {
+            renderFinalPage();
+        }
+    });
+}
 
-// Refuses to work, about to be the reason I rewrite this whole program.
 
 function restartPageButton() {
     $('main').on('click', '#restart-quiz', function(event) {
@@ -143,17 +168,6 @@ function restartPageButton() {
     console.log('startPageButton() ran');
 }
 
-
-// function testButton() {
-//     $('#js-results-page').on('click', event => {
-//         console.log('fingers crossed');
-//         event.preventDefault();
-//         $('main').remove();
-//         renderHomePage();
-
-//         console.log('test button ran');
-//     });
-// }
 
 
 // submitAnswer needs to send us to our next question page, by adding to the counter value.
@@ -173,11 +187,11 @@ function submitAnswer() {
                 alert(`Sorry, wrong answer, the correct answer was ${currentQuestion.correctAnswer}`);
 
             }
-            // cycle through questions // RENDER AFTER CHANGING STORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // cycle through questions // RENDER AFTER CHANGING STORE!
             store.questionNumber += 1;
 
-            if (store.questionNumber < 5) { // I feel like the button issue is derived from this block of code.
-                renderQuestionPage(); // maybe rendering from this button is causing the other button to malfunction. 
+            if (store.questionNumber < 5) {
+                renderQuestionPage();
             }
             if (store.questionNumber === 5) {
                 store.quizStarted = false;
@@ -202,11 +216,8 @@ function handleQuiz() {
     generateQuestionHTML();
     startPageButton();
     submitAnswer();
-    // resultsPageButton();
-    // testButton();
     restartPageButton();
-
-    console.log('handleQuiz() ran');
+    nextQuestionButton();
 }
 
 $(handleQuiz);
