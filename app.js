@@ -84,6 +84,26 @@ function generateNegativeFeedbackHTML() {
             </div>`;
 }
 
+
+function generateNoResponseHTML() {
+    let currentQuestion = store.questions[store.questionNumber];
+    return `    
+      <div class="container">
+                <h2>You miss 100% of the shots you never take! -Wayne Gretzky</h2>
+                <img src='images/gretzky.jpg' alt='Gretzky taking the shot.'>                
+                
+                <form id="js-no-response-page">
+                    <button type="button" id="back">Take that shot!</button>
+                </form>
+            </div>`;
+}
+
+
+
+
+
+
+
 /********** RENDER FUNCTION(S) **********/
 // This function conditionally replaces the contents of the <main> tag based on the state of the store
 
@@ -105,6 +125,10 @@ function renderPositiveFeedbackPage() {
 
 function renderNegativeFeedbackPage() {
     $('main').html(generateNegativeFeedbackHTML());
+}
+
+function renderNoResponsePage() {
+    $('main').html(generateNoResponseHTML());
 }
 
 /********** EVENT HANDLER FUNCTIONS **********/
@@ -130,6 +154,12 @@ function nextQuestionButton() {
     });
 }
 
+function noResponsePageButton() {
+    $('main').on('click', '#back', event => {
+        event.preventDefault();
+        renderQuestionPage();
+    });
+}
 
 function restartPageButton() {
     $('main').on('click', '#restart-quiz', function(event) {
@@ -157,7 +187,7 @@ function submitAnswer() {
             }
             // ALWAYS RENDER AFTER CHANGING STORE! //
         } else {
-            alert("You miss 100% of the shots you never take -Wayne Gretzky");
+            renderNoResponsePage();
         }
     });
 }
@@ -171,6 +201,7 @@ function handleQuiz() {
     submitAnswer();
     restartPageButton();
     nextQuestionButton();
+    noResponsePageButton();
 }
 
 $(handleQuiz);

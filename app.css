@@ -61,3 +61,7 @@ legend {
 header {
     text-align: center;
 }
+
+img {
+    padding-bottom: 15px;
+}
