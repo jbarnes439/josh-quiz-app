@@ -1,21 +1,7 @@
 'use strict';
-/**
- * Example store structure
- */
-
-// 5 or more questions are required
-// const questions = [
-
-
-
-
-// quizStarted: false,
-// questionNumber: 0,
-// score: 0;
-
 
 const store = {
-    // 5 or more questions are required
+
     questions: [{
 
             name: 'How many points are awarded for a touchdown in NFL football?',
@@ -66,7 +52,7 @@ const store = {
             imageAlt: 'A well lit basketball court waiting for you to take the shot.',
         },
         {
-            name: 'How many points are awarded for returning a missed point after attempt to the opposing teams endzone?',
+            name: 'In NFL football, how many points are awarded for returning a missed point after attempt to the opposing teams endzone?',
             answers: [
                 1,
                 2,
@@ -96,11 +82,5 @@ const store = {
 
 };
 
-// let questionCount = store.questionNumber;
+
 let currentQuestion = store.questions[store.questionCount];
-
-console.log(store.questionNumber);
-
-console.log(store.questions[store.questionNumber].name);
-// console.log(currentQuestion.name); <--- DOESN'T WORK
-console.log(store.questions[store.questionNumber]);
